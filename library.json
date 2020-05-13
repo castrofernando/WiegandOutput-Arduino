@@ -12,11 +12,11 @@
       {
         "name": "Fernando Carvalho Castro",
         "email": "castro.fernando@me.com",
-        "url": "",
         "maintainer": true
       }     
     ],
     "version": "1.0.0",
     "frameworks": "arduino",
-    "platforms": "*"
+    "platforms": "*",
+	"license": "MIT"
   }
