@@ -9,13 +9,14 @@
 
 const int DELAY_PULSE_SHORT = 100;  //100us
 const int DELAY_PULSE_LONG = 2000; //2000us
-int WiegandOut::_pinData0 = 0;
-int WiegandOut::_pinData1 = 0;
-int WiegandOut::_oddParity = 1;
-int WiegandOut::_evenParity = 0;
+
 
 //Class constructor. Determine the pins D0 and D1
 WiegandOut::WiegandOut(int data0, int data1){
+    _pinData0 = 0;
+    _pinData1 = 0;
+    _oddParity = 1;
+    _evenParity = 0;
     begin(data0,data1);
 }
 
@@ -73,9 +74,8 @@ void WiegandOut::sendD0(){
     digitalWrite(_pinData0,LOW);
     _delay_us(DELAY_PULSE_SHORT);
     digitalWrite(_pinData0,HIGH);
-    delay(2);
-    //_delay_us(DELAY_PULSE_LONG);
-    Serial.print("0");
+    _delay_us(DELAY_PULSE_LONG);
+    //Serial.print("0");
 }
 
 /*Send D1 pin pulse*/
@@ -83,9 +83,8 @@ void WiegandOut::sendD1(){
     digitalWrite(_pinData1,LOW);
     _delay_us(DELAY_PULSE_SHORT);
     digitalWrite(_pinData1,HIGH);
-    delay(2);
-    //_delay_us(DELAY_PULSE_LONG);
-    Serial.print("1");
+    _delay_us(DELAY_PULSE_LONG);
+    //Serial.print("1");
 }
 
 /*Send wiegand data
