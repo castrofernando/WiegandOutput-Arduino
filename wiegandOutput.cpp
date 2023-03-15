@@ -11,11 +11,12 @@ const int DELAY_PULSE_LONG = 2000; //2000us
 
 
 //Class constructor. Determine the pins D0 and D1
-WiegandOut::WiegandOut(int data0, int data1){
+WiegandOut::WiegandOut(int data0, int data1, bool enableDebug){
     _pinData0 = 0;
     _pinData1 = 0;
     _oddParity = 1;
     _evenParity = 0;
+    _enableDebug = enableDebug;
     begin(data0,data1);
 }
 
@@ -73,19 +74,41 @@ void WiegandOut::createParity(unsigned long data, unsigned int bits, bool useFac
 /*Send D0 pin pulse*/
 void WiegandOut::sendD0(){
     digitalWrite(_pinData0,LOW);
-    _delay_us(DELAY_PULSE_SHORT);
+    #if(defined(__AVR__))
+         _delay_us(DELAY_PULSE_SHORT);
+    #elif defined(ESP32) || defined(ESP8266)
+        delayMicroseconds(DELAY_PULSE_SHORT);
+    #endif
     digitalWrite(_pinData0,HIGH);
-    _delay_us(DELAY_PULSE_LONG);
-    Serial.print("0");
+    #if(defined(__AVR__))
+         _delay_us(DELAY_PULSE_LONG);
+    #elif defined(ESP32) || defined(ESP8266)
+        delayMicroseconds(DELAY_PULSE_LONG);
+    #endif
+    if(_enableDebug){
+        Serial.print("0");
+    }
+
 }
 
 /*Send D1 pin pulse*/
 void WiegandOut::sendD1(){
     digitalWrite(_pinData1,LOW);
-    _delay_us(DELAY_PULSE_SHORT);
+    #if(defined(__AVR__))
+         _delay_us(DELAY_PULSE_SHORT);
+    #elif defined(ESP32) || defined(ESP8266)
+        delayMicroseconds(DELAY_PULSE_SHORT);
+    #endif
     digitalWrite(_pinData1,HIGH);
-    _delay_us(DELAY_PULSE_LONG);
-    Serial.print("1");
+    #if(defined(__AVR__))
+         _delay_us(DELAY_PULSE_LONG);
+    #elif defined(ESP32) || defined(ESP8266)
+        delayMicroseconds(DELAY_PULSE_LONG);
+    #endif
+    if(_enableDebug){
+        Serial.print("1");
+    }
+
 }
 
 /*Send wiegand data
@@ -133,5 +156,8 @@ void WiegandOut::send(unsigned long data, unsigned int bits, bool useFacilityCod
     }
     //send odd parity bit
     if(_oddParity){sendD1();}else{sendD0();}
-    Serial.println();
+    if(_enableDebug){
+        Serial.println();
+    }
+
 }

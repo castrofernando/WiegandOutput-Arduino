@@ -3,7 +3,7 @@
 
 class WiegandOut{
   public:
-    WiegandOut(int data0, int data1);
+    WiegandOut(int data0, int data1, bool enableDebug = false);
     void begin(int pinD0, int pinD1);
     void send(unsigned long data, unsigned int bits, bool useFacilityCode);
 
@@ -15,6 +15,7 @@ class WiegandOut{
     int _pinData1;
     int _evenParity;
     int _oddParity;
+    bool _enableDebug;
 };
 
 #endif // _WIEGANDOUT_H

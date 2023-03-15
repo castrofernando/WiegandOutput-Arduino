@@ -9,7 +9,8 @@ This library allow arduino hardware send a wiegand data using two arduino IO (Da
 # Tested hardwares
 
 Arduino Uno
-
+ESP32
+ESP8266
 
 
 # How to use
@@ -25,6 +26,7 @@ Arduino Uno
 #include "wiegandOutput.h"
 
 WiegandOut wiegandOut(8,9);
+//WiegandOut wiegandOut(8,9,true); -> it will enable the serial output with the binary wiegand data as ascii to debug;
 
 long count = 0;
 
